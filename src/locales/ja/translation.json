@@ -1,11 +1,13 @@
 {
   "header": {
-    "title": "アドミニストレーター_パネル",
+    "title": "アドミニストレーター パネル",
+    "language":"言語",
     "notifications": "通知",
     "notificationsDisabled": "通知が無効です",
     "account": "アカウント設定"
   },
   "menu": {
+    "title": "システム名：",
     "dashboard": "ダッシュボード",
     "users": "ユーザー管理",
     "settings": "設定"

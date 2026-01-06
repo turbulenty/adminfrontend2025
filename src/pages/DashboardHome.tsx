@@ -3,6 +3,7 @@
 
 // 导入 React Hooks：useState 管理状态，useEffect 处理副作用
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // 导入 MUI 组件：用于布局、卡片、文本显示和加载动画
 import {
@@ -110,6 +111,8 @@ const COLORS = ['#99d0ffff ', '#5fdbc4ff', '#feb47b'];
 
 // 导出默认组件：仪表盘主页
 export default function DashboardHome() {
+  const { t } = useTranslation();  // 1.6添加
+
   // 状态：统计数据，初始值为 null
   const [stats, setStats] = useState<Stats | null>(null);
 
@@ -241,7 +244,7 @@ export default function DashboardHome() {
 
       {/* 页面标题 */}
       <Typography variant="h4" fontWeight={600} mb={3}>
-        ndsl系统监控仪表盘——ダッシュボード (Dashboard)
+        {t('menu.dashboard')}
       </Typography>
 
 

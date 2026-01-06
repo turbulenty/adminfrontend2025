@@ -1,11 +1,13 @@
 {
   "header": {
     "title": "Administrator Panel",
+    "language":"Language",
     "notifications": "Notifications",
     "notificationsDisabled": "Notifications Disabled",
     "account": "Account Settings"
   },
   "menu": {
+    "title": "System Name:",
     "dashboard": "Dashboard",
     "users": "User Management",
     "settings": "Settings"

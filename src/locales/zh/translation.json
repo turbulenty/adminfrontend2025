@@ -1,11 +1,13 @@
 {
   "header": {
     "title": "系统管理面板",
+    "language":"语言",
     "notifications": "通知",
     "notificationsDisabled": "通知已禁用",
     "account": "账户设置"
   },
   "menu": {
+    "title": "系统名称:",
     "dashboard": "仪表盘",
     "users": "用户管理",
     "settings": "设置"

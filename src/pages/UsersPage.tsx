@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Paper,
@@ -39,6 +40,7 @@ interface UserFormData {
 }
 
 export default function UsersPage() {
+  const { t } = useTranslation();  // 1.6添加
   const [users, setUsers] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<any>(null);
@@ -185,7 +187,7 @@ export default function UsersPage() {
       {/* 标题栏 */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h4" fontWeight={600}>
-          用户管理
+          {t('menu.users')}
         </Typography>
         <Button
           variant="contained"
@@ -233,16 +235,21 @@ export default function UsersPage() {
       </Box>
 
       {/* 用户表格 */}
-      <TableContainer component={Paper} sx={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-        <Table>
+      <TableContainer component={Paper}
+        sx={{
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          maxHeight: 'calc(100vh - 320px)', // 视口高度 1.6 debug - (顶栏64px + 标题区域80px + 搜索框76px + 分页器100px)
+          overflow: 'auto',
+        }}>
+        <Table stickyHeader>  {/* 添加 stickyHeader 让表头固定 */}
           <TableHead>
-            <TableRow sx={{ bgcolor: '#fff5ec' }}>
-              <TableCell>ID</TableCell>
-              <TableCell>姓名</TableCell>
-              <TableCell>邮箱</TableCell>
-              <TableCell>角色</TableCell>
-              <TableCell>状态</TableCell>
-              <TableCell align="center">操作</TableCell>
+            <TableRow>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>ID</TableCell>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>姓名</TableCell>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>邮箱</TableCell>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>角色</TableCell>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>状态</TableCell>
+              <TableCell align="center" sx={{ bgcolor: '#feb47b' }}>操作</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

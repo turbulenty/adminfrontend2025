@@ -38,6 +38,7 @@ import {
   Logout,
   Circle,
   Public,
+  // Language,
 } from "@mui/icons-material";
 
 import { authApi } from '../services/api'; //认证接口
@@ -47,13 +48,27 @@ const drawerWidth = 240;
 const drawerCollapsedWidth = 65;
 
 export default function DashboardLayout() {
-
-
-
   const location = useLocation();
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  //1.6 系统名称开始
+  // 系统名称状态
+  const [systemName, setSystemName] = useState(() => {
+    try {
+      const settings = localStorage.getItem('appSettings');
+      if (settings) {
+        const parsed = JSON.parse(settings);
+        return parsed.systemName || 'ndsl';
+      }
+    } catch (error) {
+      console.error('读取系统名称失败:', error);
+    }
+    return 'ndsl';
+  });
+
+  //1.6 系统名称结束
 
   //1.6多语言开始
   const { t, i18n } = useTranslation();
@@ -168,6 +183,29 @@ export default function DashboardLayout() {
       window.removeEventListener('settingsUpdated', handleSettingsUpdate);
     };
   }, []);
+
+  // 监听系统设置更新
+  useEffect(() => {
+    const handleSettingsUpdate = () => {
+      try {
+        const settings = localStorage.getItem('appSettings');
+        if (settings) {
+          const parsed = JSON.parse(settings);
+          setSystemName(parsed.systemName || 'ndsl');
+        }
+      } catch (error) {
+        console.error('更新系统名称失败:', error);
+      }
+    };
+
+    // 监听自定义事件
+    window.addEventListener('settingsUpdated', handleSettingsUpdate);
+
+    return () => {
+      window.removeEventListener('settingsUpdated', handleSettingsUpdate);
+    };
+  }, []);
+
 
   const loadNotificationSettings = () => {
     try {
@@ -324,13 +362,14 @@ export default function DashboardLayout() {
           </IconButton>
 
           <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 600 }}>
-            Administrator Panel（アドミニストレーター_パネル）
+            {t('header.title')}
           </Typography>
 
           {/* 语言切换按钮 - 添加在通知图标之前 1.6 */}
           <Tooltip title={t('header.language') || '语言'}>
             <IconButton color="inherit" onClick={handleLanguageMenuOpen} sx={{ mr: 1 }}>
               <Public />
+              {/* <Language /> */}
             </IconButton>
           </Tooltip>
 
@@ -385,6 +424,8 @@ export default function DashboardLayout() {
           <Tooltip title="账户设置">
             <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
               <Avatar
+                src="/yeah.jpg"  // 使用 public 文件夹中的图片
+                alt="用户头像"
                 sx={{
                   width: 36,
                   height: 36,
@@ -453,14 +494,14 @@ export default function DashboardLayout() {
               height: 40,
             }}
           >
-            A
+            C
           </Avatar>
           {drawerOpen && (
             <Typography
               variant="subtitle1"
               sx={{ ml: 1.5, fontWeight: 600, color: "#333" }}
             >
-              系统名称是ndsl
+              {t('menu.title')}{systemName}
             </Typography>
           )}
         </Box>

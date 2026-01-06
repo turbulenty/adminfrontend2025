@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Typography,
   Paper,
@@ -16,6 +17,7 @@ import { settingsApi } from '../services/api';
 
 
 export default function SettingsPage() {
+  const { t } = useTranslation();  // 1.6添加
   const [settings, setSettings] = useState({
     systemName: 'Health Monitoring System',
     apiEndpoint: 'http://localhost:8080',
@@ -103,7 +105,7 @@ export default function SettingsPage() {
   return (
     <Box sx={{width:1230}}>
       <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
-        系统设置——システム設定（しすてむ せってい）
+        {t('menu.settings')}
       </Typography>
 
       {saved && (
