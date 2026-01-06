@@ -1,0 +1,39 @@
+{
+  "header": {
+    "title": "系统管理面板",
+    "notifications": "通知",
+    "notificationsDisabled": "通知已禁用",
+    "account": "账户设置"
+  },
+  "menu": {
+    "dashboard": "仪表盘",
+    "users": "用户管理",
+    "settings": "设置"
+  },
+  "userMenu": {
+    "profile": "个人资料",
+    "accountSettings": "账户设置",
+    "logout": "退出登录"
+  },
+  "notifications": {
+    "title": "通知中心",
+    "unread": "条未读",
+    "markAllRead": "全部标记为已读",
+    "close": "关闭"
+  },
+  "profile": {
+    "title": "个人资料",
+    "username": "用户名",
+    "email": "邮箱",
+    "role": "角色",
+    "close": "关闭"
+  },
+  "account": {
+    "title": "账户设置 - 修改密码",
+    "currentPassword": "当前密码",
+    "newPassword": "新密码",
+    "confirmPassword": "确认新密码",
+    "cancel": "取消",
+    "submit": "修改密码"
+  }
+}

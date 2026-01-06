@@ -1,0 +1,39 @@
+{
+  "header": {
+    "title": "Administrator Panel",
+    "notifications": "Notifications",
+    "notificationsDisabled": "Notifications Disabled",
+    "account": "Account Settings"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "users": "User Management",
+    "settings": "Settings"
+  },
+  "userMenu": {
+    "profile": "Profile",
+    "accountSettings": "Account Settings",
+    "logout": "Logout"
+  },
+  "notifications": {
+    "title": "Notification Center",
+    "unread": "unread",
+    "markAllRead": "Mark All as Read",
+    "close": "Close"
+  },
+  "profile": {
+    "title": "Profile",
+    "username": "Username",
+    "email": "Email",
+    "role": "Role",
+    "close": "Close"
+  },
+  "account": {
+    "title": "Account Settings - Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "cancel": "Cancel",
+    "submit": "Change Password"
+  }
+}

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import {
   AppBar,
   Toolbar,
@@ -36,6 +37,7 @@ import {
   Notifications,
   Logout,
   Circle,
+  Public,
 } from "@mui/icons-material";
 
 import { authApi } from '../services/api'; //认证接口
@@ -52,6 +54,26 @@ export default function DashboardLayout() {
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  //1.6多语言开始
+  const { t, i18n } = useTranslation();
+  const [languageAnchorEl, setLanguageAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleLanguageMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setLanguageAnchorEl(event.currentTarget);
+  };
+
+  const handleLanguageMenuClose = () => {
+    setLanguageAnchorEl(null);
+  };
+
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem('language', lang);
+    setLanguageAnchorEl(null);
+  };
+
+  //1.6多语言结束
 
   // 弹窗状态
   const [profileDialogOpen, setProfileDialogOpen] = useState(false);
@@ -114,9 +136,12 @@ export default function DashboardLayout() {
   // const unreadCount = notifications.filter(n => !n.read).length;
 
   const menu = [
-    { label: "仪表盘", path: "/dashboard", icon: <DashboardIcon /> },
-    { label: "用户管理", path: "/dashboard/users", icon: <PeopleIcon /> },
-    { label: "设置", path: "/dashboard/settings", icon: <SettingsIcon /> },
+    { label: t('menu.dashboard'), path: "/dashboard", icon: <DashboardIcon /> },
+    { label: t('menu.users'), path: "/dashboard/users", icon: <PeopleIcon /> },
+    { label: t('menu.settings'), path: "/dashboard/settings", icon: <SettingsIcon /> },
+    // { label: "仪表盘", path: "/dashboard", icon: <DashboardIcon /> },
+    // { label: "用户管理", path: "/dashboard/users", icon: <PeopleIcon /> },
+    // { label: "设置", path: "/dashboard/settings", icon: <SettingsIcon /> },
   ];
 
   // 加载通知启用状态
@@ -176,7 +201,7 @@ export default function DashboardLayout() {
     navigate('/login');
   };
 
-    // 当前用户资料 1.4
+  // 当前用户资料 1.4
   const [currentUserProfile, setCurrentUserProfile] = useState({
     name: '',
     email: '',
@@ -302,6 +327,41 @@ export default function DashboardLayout() {
             Administrator Panel（アドミニストレーター_パネル）
           </Typography>
 
+          {/* 语言切换按钮 - 添加在通知图标之前 1.6 */}
+          <Tooltip title={t('header.language') || '语言'}>
+            <IconButton color="inherit" onClick={handleLanguageMenuOpen} sx={{ mr: 1 }}>
+              <Public />
+            </IconButton>
+          </Tooltip>
+
+          <Menu
+            anchorEl={languageAnchorEl}
+            open={Boolean(languageAnchorEl)}
+            onClose={handleLanguageMenuClose}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          >
+            <MenuItem
+              onClick={() => handleLanguageChange('zh')}
+              selected={i18n.language === 'zh'}
+            >
+              中文
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleLanguageChange('ja')}
+              selected={i18n.language === 'ja'}
+            >
+              日本語
+            </MenuItem>
+            <MenuItem
+              onClick={() => handleLanguageChange('en')}
+              selected={i18n.language === 'en'}
+            >
+              English
+            </MenuItem>
+          </Menu>
+
+
           {/* 通知图标 */}
           {notificationEnabled && (
             <Tooltip title="通知">
@@ -321,6 +381,7 @@ export default function DashboardLayout() {
             </Tooltip>
           )}
 
+          {/* 头像图标 */}
           <Tooltip title="账户设置">
             <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
               <Avatar
@@ -462,7 +523,7 @@ export default function DashboardLayout() {
           // width: 1290,
           // width:"100%",
           width: drawerOpen //主内容区的Box宽度=屏幕宽度-左侧栏的g宽度（无论收缩）
-            ? `calc(100vw - ${drawerWidth}px)` 
+            ? `calc(100vw - ${drawerWidth}px)`
             : `calc(100vw - ${drawerCollapsedWidth}px)`,
           flexGrow: 1,
           display: "flex",

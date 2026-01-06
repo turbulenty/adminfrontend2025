@@ -1,0 +1,39 @@
+{
+  "header": {
+    "title": "アドミニストレーター_パネル",
+    "notifications": "通知",
+    "notificationsDisabled": "通知が無効です",
+    "account": "アカウント設定"
+  },
+  "menu": {
+    "dashboard": "ダッシュボード",
+    "users": "ユーザー管理",
+    "settings": "設定"
+  },
+  "userMenu": {
+    "profile": "プロフィール",
+    "accountSettings": "アカウント設定",
+    "logout": "ログアウト"
+  },
+  "notifications": {
+    "title": "通知センター",
+    "unread": "件の未読",
+    "markAllRead": "すべて既読にする",
+    "close": "閉じる"
+  },
+  "profile": {
+    "title": "プロフィール",
+    "username": "ユーザー名",
+    "email": "メール",
+    "role": "役割",
+    "close": "閉じる"
+  },
+  "account": {
+    "title": "アカウント設定 - パスワード変更",
+    "currentPassword": "現在のパスワード",
+    "newPassword": "新しいパスワード",
+    "confirmPassword": "新しいパスワードを確認",
+    "cancel": "キャンセル",
+    "submit": "パスワードを変更"
+  }
+}
