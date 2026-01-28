@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { authApi } from '../services/api';
 import {
     Container,
@@ -13,6 +14,8 @@ import {
     Alert,
     InputAdornment,
     IconButton,
+    Menu,
+    MenuItem
 } from '@mui/material';
 import {
     PersonAdd as PersonAddIcon,
@@ -21,10 +24,18 @@ import {
     Person as PersonIcon,
     Visibility,
     VisibilityOff,
+    Public
 } from '@mui/icons-material';
+
 
 export default function RegisterPage() {
     const navigate = useNavigate();
+
+    // 1. 首先定义 t 和 i18n
+    const { t, i18n } = useTranslation();
+    
+    // 2. 定义所有状态
+    const [languageAnchorEl, setLanguageAnchorEl] = useState<null | HTMLElement>(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -35,6 +46,22 @@ export default function RegisterPage() {
     const [success, setSuccess] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
+    // 3. 语言切换函数
+    const handleLanguageMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setLanguageAnchorEl(event.currentTarget);
+    };
+
+    const handleLanguageMenuClose = () => {
+        setLanguageAnchorEl(null);
+    };
+
+    const handleLanguageChange = (lang: string) => {
+        i18n.changeLanguage(lang);
+        localStorage.setItem('language', lang);
+        setLanguageAnchorEl(null);
+    };
+
+    // 4. 表单处理函数
     const handleChange = (field: string) => (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -44,22 +71,23 @@ export default function RegisterPage() {
         });
     };
 
+    // 5. 提交函数
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setError('');
 
         if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-            setError('请填写所有字段');
+            setError(t("register.errorAllFields"));
             return;
         }
 
         if (formData.password !== formData.confirmPassword) {
-            setError('两次输入的密码不一致');
+            setError(t("register.errorPasswordMismatch"));
             return;
         }
 
         if (formData.password.length < 6) {
-            setError('密码长度至少6位');
+            setError(t("register.errorPasswordLength"));
             return;
         }
 
@@ -77,38 +105,9 @@ export default function RegisterPage() {
                 }, 1500);
             }
         } catch (error: any) {
-            setError(error.response?.data?.message || '注册失败');
+            setError(error.response?.data?.message || t("register.registerError"));
         }
     };
-
-    // const handleSubmit = async (event: React.FormEvent) => {
-    //     event.preventDefault();
-
-    //     // 验证
-    //     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
-    //         setError('请填写所有字段');
-    //         return;
-    //     }
-
-    //     if (formData.password !== formData.confirmPassword) {
-    //         setError('两次输入的密码不一致');
-    //         return;
-    //     }
-
-    //     if (formData.password.length < 6) {
-    //         setError('密码长度至少6位');
-    //         return;
-    //     }
-
-    //     // TODO: 这里将来连接后端注册API
-    //     // 现在模拟注册成功
-    //     setSuccess(true);
-    //     setError('');
-
-    //     setTimeout(() => {
-    //         navigate('/login');
-    //     }, 1500);
-    // };
 
     return (
         <Box
@@ -118,11 +117,54 @@ export default function RegisterPage() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                // background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                 background: 'linear-gradient(135deg, #fbd393ff, #f5576c 100%)',
                 padding: 2,
+                position: 'relative',
             }}
         >
+            {/* 语言切换按钮 - 右上角 */}
+            <IconButton
+                onClick={handleLanguageMenuOpen}
+                sx={{
+                    position: 'absolute',
+                    top: 20,
+                    right: 20,
+                    color: 'white',
+                    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                    '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                    },
+                }}
+            >
+                <Public />
+            </IconButton>
+
+            {/* 语言选择菜单 */}
+            <Menu
+                anchorEl={languageAnchorEl}
+                open={Boolean(languageAnchorEl)}
+                onClose={handleLanguageMenuClose}
+            >
+                <MenuItem
+                    onClick={() => handleLanguageChange('zh')}
+                    selected={i18n.language === 'zh'}
+                >
+                    中文
+                </MenuItem>
+                <MenuItem
+                    onClick={() => handleLanguageChange('en')}
+                    selected={i18n.language === 'en'}
+                >
+                    English
+                </MenuItem>
+                <MenuItem
+                    onClick={() => handleLanguageChange('ja')}
+                    selected={i18n.language === 'ja'}
+                >
+                    日本語
+                </MenuItem>
+            </Menu>
+
             <Container component="main" maxWidth="xs">
                 <Paper
                     elevation={24}
@@ -136,14 +178,13 @@ export default function RegisterPage() {
                         backgroundColor: 'rgba(255, 255, 255, 0.95)',
                     }}
                 >
-                    {/* Logo/图标 */}
+                    {/* Logo */}
                     <Box
                         sx={{
                             width: 80,
                             height: 80,
                             borderRadius: '50%',
                             background: 'linear-gradient(135deg, #fbd393ff, #f5576c 100%)',
-                            //   background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -153,12 +194,12 @@ export default function RegisterPage() {
                         <PersonAddIcon sx={{ fontSize: 40, color: 'white' }} />
                     </Box>
 
-                    <Typography component="h1" variant="h4" fontWeight={700} mb={1}>
-                        创建新账户
+                    <Typography component="h1" variant="h5" fontWeight={700} mb={1}>
+                        {t("register.title")}
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary" mb={3}>
-                        填写以下信息完成注册
+                        {t("register.subtitle")}
                     </Typography>
 
                     {error && (
@@ -169,7 +210,7 @@ export default function RegisterPage() {
 
                     {success && (
                         <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
-                            注册成功！正在跳转到登录页...
+                            {t("register.registerSuccess")}
                         </Alert>
                     )}
 
@@ -179,7 +220,7 @@ export default function RegisterPage() {
                             required
                             fullWidth
                             id="name"
-                            label="姓名"
+                            label={t("register.name")}
                             name="name"
                             autoComplete="name"
                             autoFocus
@@ -195,11 +236,11 @@ export default function RegisterPage() {
                             sx={{
                                 '& .MuiOutlinedInput-root': {
                                     '&.Mui-focused fieldset': {
-                                        borderColor: '#ff6c6cff',  // 改成橙红色
+                                        borderColor: '#ff6c6cff',
                                     },
                                 },
                                 '& .MuiInputLabel-root.Mui-focused': {
-                                    color: '#ff6c6cff',  // 标签文字颜色
+                                    color: '#ff6c6cff',
                                 },
                             }}
                         />
@@ -209,7 +250,7 @@ export default function RegisterPage() {
                             required
                             fullWidth
                             id="email"
-                            label="邮箱地址"
+                            label={t("register.email")}
                             name="email"
                             autoComplete="email"
                             value={formData.email}
@@ -224,11 +265,11 @@ export default function RegisterPage() {
                             sx={{
                                 '& .MuiOutlinedInput-root': {
                                     '&.Mui-focused fieldset': {
-                                        borderColor: '#ff6c6cff',  // 改成橙红色
+                                        borderColor: '#ff6c6cff',
                                     },
                                 },
                                 '& .MuiInputLabel-root.Mui-focused': {
-                                    color: '#ff6c6cff',  // 标签文字颜色
+                                    color: '#ff6c6cff',
                                 },
                             }}
                         />
@@ -238,7 +279,7 @@ export default function RegisterPage() {
                             required
                             fullWidth
                             name="password"
-                            label="密码"
+                            label={t("register.password")}
                             type={showPassword ? 'text' : 'password'}
                             id="password"
                             autoComplete="new-password"
@@ -264,11 +305,11 @@ export default function RegisterPage() {
                             sx={{
                                 '& .MuiOutlinedInput-root': {
                                     '&.Mui-focused fieldset': {
-                                        borderColor: '#ff6c6cff',  // 改成橙红色
+                                        borderColor: '#ff6c6cff',
                                     },
                                 },
                                 '& .MuiInputLabel-root.Mui-focused': {
-                                    color: '#ff6c6cff',  // 标签文字颜色
+                                    color: '#ff6c6cff',
                                 },
                             }}
                         />
@@ -278,7 +319,7 @@ export default function RegisterPage() {
                             required
                             fullWidth
                             name="confirmPassword"
-                            label="确认密码"
+                            label={t("register.confirmPassword")}
                             type={showPassword ? 'text' : 'password'}
                             id="confirmPassword"
                             value={formData.confirmPassword}
@@ -293,11 +334,11 @@ export default function RegisterPage() {
                             sx={{
                                 '& .MuiOutlinedInput-root': {
                                     '&.Mui-focused fieldset': {
-                                        borderColor: '#ff6c6cff',  // 改成橙红色
+                                        borderColor: '#ff6c6cff',
                                     },
                                 },
                                 '& .MuiInputLabel-root.Mui-focused': {
-                                    color: '#ff6c6cff',  // 标签文字颜色
+                                    color: '#ff6c6cff',
                                 },
                             }}
                         />
@@ -310,24 +351,21 @@ export default function RegisterPage() {
                             sx={{
                                 mt: 3,
                                 mb: 2,
-                                // background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
                                 background: 'linear-gradient(135deg, #fbd393ff, #f5576c 100%)',
-
                                 py: 1.5,
                                 fontSize: '1rem',
                                 fontWeight: 600,
                                 '&:hover': {
-                                    // background: 'linear-gradient(135deg, #e082ea 0%, #e4465b 100%)',
                                     background: 'linear-gradient(135deg, #fbd393ff, #f5576c 100%)',
                                 },
                             }}
                         >
-                            注册
+                            {t("register.registerButton")}
                         </Button>
 
                         <Box sx={{ textAlign: 'center', mt: 2 }}>
                             <Typography variant="body2" color="text.secondary">
-                                已有账户？
+                                {t("register.hasAccount")}
                                 <Link
                                     href="#"
                                     onClick={(e) => {
@@ -344,7 +382,7 @@ export default function RegisterPage() {
                                         },
                                     }}
                                 >
-                                    立即登录
+                                    {t("register.loginNow")}
                                 </Link>
                             </Typography>
                         </Box>

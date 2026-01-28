@@ -1,4 +1,30 @@
 {
+  "login": {
+    "title": "管理后台登录",
+    "subtitle": "请使用您的账户登录系统",
+    "email": "邮箱地址",
+    "password": "密码",
+    "loginButton": "登录",
+    "noAccount": "还没有账户？",
+    "registerNow": "立即注册",
+    "loginError": "登录失败，请检查邮箱和密码"
+  },
+  "register": {
+    "title": "创建新账户",
+    "subtitle": "填写以下信息完成注册",
+    "name": "姓名",
+    "email": "邮箱地址",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "registerButton": "注册",
+    "hasAccount": "已有账户？",
+    "loginNow": "立即登录",
+    "errorAllFields": "请填写所有字段",
+    "errorPasswordMismatch": "两次输入的密码不一致",
+    "errorPasswordLength": "密码长度至少6位",
+    "registerError": "注册失败",
+    "registerSuccess": "注册成功！正在跳转到登录页..."
+  },
   "header": {
     "title": "系统管理面板",
     "language": "语言",
@@ -39,7 +65,7 @@
     "submit": "修改密码"
   },
   "dashboard": {
-    "number":"人数",
+    "number": "人数",
     "userGrowthTrend": "用户增长趋势",
     "date": "日期",
     "userRoleDistribution": "用户角色分布",

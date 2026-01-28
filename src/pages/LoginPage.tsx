@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { authApi } from '../services/api';
 import {
     Container,
@@ -13,6 +14,8 @@ import {
     Alert,
     InputAdornment,
     IconButton,
+    Menu,
+    MenuItem,
 } from '@mui/material';
 import {
     Login as LoginIcon,
@@ -20,9 +23,50 @@ import {
     Lock as LockIcon,
     Visibility,
     VisibilityOff,
+    Public,
 } from '@mui/icons-material';
 
 export default function LoginPage() {
+    const navigate = useNavigate();
+
+    // ← 1. 首先定义 t 和 i18n（参考layout的顺序）
+    const { t, i18n } = useTranslation();
+
+    // ← 2. 然后定义所有状态
+    const [languageAnchorEl, setLanguageAnchorEl] = useState<null | HTMLElement>(null);
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
+    const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    // ← 3. 语言切换函数
+    const handleLanguageMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+        setLanguageAnchorEl(event.currentTarget);
+    };
+
+    const handleLanguageMenuClose = () => {
+        setLanguageAnchorEl(null);
+    };
+
+    const handleLanguageChange = (lang: string) => {
+        i18n.changeLanguage(lang);
+        localStorage.setItem('language', lang);
+        setLanguageAnchorEl(null);
+    };
+
+    // ← 4. 表单处理函数
+    const handleChange = (field: string) => (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setFormData({
+            ...formData,
+            [field]: event.target.value,
+        });
+    };
+
+    // ← 5. 提交函数
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setError('');
@@ -34,32 +78,15 @@ export default function LoginPage() {
             });
 
             if (response.data.success) {
-                // 保存认证信息
                 localStorage.setItem('isAuthenticated', 'true');
-                localStorage.setItem('userEmail', formData.email);  // ← 确保这行存在
+                localStorage.setItem('userEmail', formData.email);
                 localStorage.setItem('userName', response.data.user.name);
                 localStorage.setItem('userRole', response.data.user.role);
                 navigate('/dashboard');
             }
         } catch (error: any) {
-            setError(error.response?.data?.message || '登录失败，请检查邮箱和密码');
+            setError(error.response?.data?.message || t("login.loginError"));
         }
-    };
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
-    const [error, setError] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-
-    const handleChange = (field: string) => (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setFormData({
-            ...formData,
-            [field]: event.target.value,
-        });
     };
 
     // const handleSubmit = async (event: React.FormEvent) => {
@@ -85,8 +112,54 @@ export default function LoginPage() {
                 background: 'linear-gradient(135deg, #ffff69ff, #ff6c6cff)',
                 // background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 padding: 2,
+                position: 'relative',  //让IconButton可以absolute定位
             }}
+
         >
+            {/* 语言切换按钮1.28/~ */}
+            <IconButton
+                onClick={handleLanguageMenuOpen}
+                sx={{
+                    position: 'absolute',
+                    top: 20,
+                    left: '50%',  //0128
+                    transform: 'translateX(-50%)',  //实现真正的居中
+                    color: 'white',
+                    backgroundColor: '#ff6c6cff',
+                    '&:hover': {
+                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                    },
+                }}
+            >
+                <Public />
+            </IconButton>
+
+            {/* 语言选择Menu - 添加这个 */}
+            <Menu
+                anchorEl={languageAnchorEl}
+                open={Boolean(languageAnchorEl)}
+                onClose={handleLanguageMenuClose}
+            >
+                <MenuItem
+                    onClick={() => handleLanguageChange('zh')}
+                    selected={i18n.language === 'zh'}
+                >
+                    中文
+                </MenuItem>
+                <MenuItem
+                    onClick={() => handleLanguageChange('en')}
+                    selected={i18n.language === 'en'}
+                >
+                    English
+                </MenuItem>
+                <MenuItem
+                    onClick={() => handleLanguageChange('ja')}
+                    selected={i18n.language === 'ja'}
+                >
+                    日本語
+                </MenuItem>
+            </Menu>
+            {/* 语言切换按钮1.28~/ */}
             <Container component="main" maxWidth="xs">
                 <Paper
                     elevation={24}
@@ -100,6 +173,7 @@ export default function LoginPage() {
                         backgroundColor: 'rgba(255, 255, 255, 0.95)',
                     }}
                 >
+
                     {/* Logo/图标 */}
                     <Box
                         sx={{
@@ -118,11 +192,11 @@ export default function LoginPage() {
                     </Box>
 
                     <Typography component="h1" variant="h4" fontWeight={700} mb={1}>
-                        管理后台登录
+                        {t("login.title")}
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary" mb={3}>
-                        请使用您的账户登录系统
+                        {t("login.subtitle")}
                     </Typography>
 
                     {error && (
@@ -137,7 +211,7 @@ export default function LoginPage() {
                             required
                             fullWidth
                             id="email"
-                            label="邮箱地址"
+                            label={t("login.email")}
                             name="email"
                             autoComplete="email"
                             autoFocus
@@ -167,7 +241,7 @@ export default function LoginPage() {
                             required
                             fullWidth
                             name="password"
-                            label="密码"
+                            label={t("login.password")}
                             type={showPassword ? 'text' : 'password'}
                             id="password"
                             autoComplete="current-password"
@@ -221,12 +295,12 @@ export default function LoginPage() {
                                 },
                             }}
                         >
-                            登录
+                            {t("login.loginButton")}
                         </Button>
 
                         <Box sx={{ textAlign: 'center', mt: 2 }}>
                             <Typography variant="body2" color="text.secondary">
-                                还没有账户？
+                                {t("login.noAccount")}
                                 <Link
                                     href="#"
                                     onClick={(e) => {
@@ -244,7 +318,7 @@ export default function LoginPage() {
                                         },
                                     }}
                                 >
-                                    立即注册
+                                    {t("login.registerNow")}
                                 </Link>
                             </Typography>
                         </Box>

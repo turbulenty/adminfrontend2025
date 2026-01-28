@@ -1,4 +1,30 @@
 {
+  "login": {
+    "title": "Admin Panel Login",
+    "subtitle": "Please sign in with your account",
+    "email": "Email Address",
+    "password": "Password",
+    "loginButton": "Sign In",
+    "noAccount": "Don't have an account?",
+    "registerNow": "Register Now",
+    "loginError": "Login failed, please check your email and password"
+  },
+  "register": {
+    "title": "Create New Account",
+    "subtitle": "Fill in the information below to register",
+    "name": "Name",
+    "email": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "registerButton": "Register",
+    "hasAccount": "Already have an account?",
+    "loginNow": "Sign In Now",
+    "errorAllFields": "Please fill in all fields",
+    "errorPasswordMismatch": "Passwords do not match",
+    "errorPasswordLength": "Password must be at least 6 characters",
+    "registerError": "Registration failed",
+    "registerSuccess": "Registration successful! Redirecting to login page..."
+  },
   "header": {
     "title": "Administrator Panel",
     "language": "Language",
@@ -39,7 +65,7 @@
     "submit": "Change Password"
   },
   "dashboard": {
-    "number":"number",
+    "number": "number",
     "userGrowthTrend": "User Growth Trend",
     "userCount": "User Count",
     "date": "Date",
