@@ -1,7 +1,7 @@
 {
   "header": {
     "title": "アドミニストレーター パネル",
-    "language":"言語",
+    "language": "言語",
     "notifications": "通知",
     "notificationsDisabled": "通知が無効です",
     "account": "アカウント設定"
@@ -37,5 +37,48 @@
     "confirmPassword": "新しいパスワードを確認",
     "cancel": "キャンセル",
     "submit": "パスワードを変更"
+  },
+  "dashboard": {
+    "number":"人数",
+    "userGrowthTrend": "ユーザー増加傾向",
+    "userCount": "ユーザー数",
+    "date": "日付",
+    "userTotal": "ユーザー総数",
+    "userRoleDistribution": "ユーザーロール分布",
+    "systemOverview": "システム概要",
+    "totalUsers": "総ユーザー数",
+    "activeUsers": "アクティブユーザー",
+    "todayNew": "本日新規",
+    "inactiveUsers": "非アクティブユーザー"
+  },
+  "userList": {
+    "addUser": "ユーザー追加",
+    "searchPlaceholder": "ユーザー名またはメールで検索...",
+    "table": {
+      "id": "ID",
+      "name": "氏名",
+      "email": "メールアドレス",
+      "role": "ロール",
+      "status": "ステータス",
+      "actions": "操作"
+    },
+    "pwdForm": {
+      "passwordLabel": "パスワード",
+      "newPasswordLabel": "新しいパスワード（空欄で変更しない）",
+      "passwordHelper": "初期パスワード、6文字以上",
+      "newPasswordHelper": "6文字以上、空欄で変更しない"
+    }
+  },
+  "settings": {
+    "basicSettings": "基本設定",
+    "systemName": "システム名",
+    "apiEndpoint": "APIエンドポイント",
+    "apiUrlDescription": "バックエンドAPIのベースURL",
+    "refreshInterval": "更新間隔（秒）",
+    "refreshDescription": "データの自動更新間隔",
+    "featureSwitches": "機能スイッチ",
+    "enableNotifications": "システム通知を有効にする",
+    "enableAutoRefresh": "自動更新を有効にする",
+    "saveSettings": "設定を保存"
   }
 }

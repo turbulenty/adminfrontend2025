@@ -413,7 +413,7 @@ export default function DashboardLayout() {
           )}
 
           {!notificationEnabled && (
-            <Tooltip title="通知已禁用">
+            <Tooltip title={t("header.notificationsDisabled")}>
               <IconButton color="inherit" sx={{ mr: 1, opacity: 0.5 }} disabled>
                 <Notifications />
               </IconButton>
@@ -421,7 +421,7 @@ export default function DashboardLayout() {
           )}
 
           {/* 头像图标 */}
-          <Tooltip title="账户设置">
+          <Tooltip title={t('userMenu.accountSettings')}>
             <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
               <Avatar
                 src="/yeah.jpg"  // 使用 public 文件夹中的图片
@@ -446,14 +446,14 @@ export default function DashboardLayout() {
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <MenuItem onClick={handleOpenProfile}>
-              <AccountCircle sx={{ mr: 1 }} /> 个人资料
+              <AccountCircle sx={{ mr: 1 }} /> {t('userMenu.profile')}
             </MenuItem>
             <MenuItem onClick={handleOpenAccount}>
-              <SettingsIcon sx={{ mr: 1 }} /> 账户设置
+              <SettingsIcon sx={{ mr: 1 }} /> {t('userMenu.accountSettings')}
             </MenuItem>
             <Divider />
             <MenuItem onClick={handleLogout}>
-              <Logout sx={{ mr: 1 }} /> 退出登录
+              <Logout sx={{ mr: 1 }} /> {t('userMenu.logout')}
             </MenuItem>
           </Menu>
         </Toolbar>
@@ -529,7 +529,7 @@ export default function DashboardLayout() {
                   },
                 },
                 "&:hover": {
-                  bgcolor: "#fff677ff",
+                  bgcolor: "#fdffc0af",
                 },
               }}
             >
@@ -571,7 +571,8 @@ export default function DashboardLayout() {
           flexDirection: "column",
           minHeight: "100vh",
           // minWidth: 0,
-          bgcolor: "#fbff7faf",
+          // bgcolor: "#fbff7faf",
+          bgcolor: "#fdffc0af",
         }}
       >
         <Toolbar />
@@ -598,9 +599,9 @@ export default function DashboardLayout() {
         >
           <DialogTitle>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="h6">通知中心</Typography>
+              <Typography variant="h6">{t("notifications.title")}</Typography>
               <Typography variant="body2" color="text.secondary">
-                {unreadCount}条未读
+                {unreadCount} {t("notifications.unread")}
               </Typography>
             </Box>
           </DialogTitle>
@@ -611,7 +612,7 @@ export default function DashboardLayout() {
                   key={notification.id}
                   sx={{
                     // bgcolor: notification.read ? 'transparent' : '#f5f5f5',
-                    bgcolor: notification.read ? 'transparent' : '#fbff7faf',
+                    bgcolor: notification.read ? 'transparent' : '#fdffc0af',
                     mb: 1,
                     borderRadius: 1,
                     flexDirection: 'column',
@@ -646,14 +647,14 @@ export default function DashboardLayout() {
               onClick={() => setNotificationDialogOpen(false)}
               sx={{ color: '#feb47b' }}
             >
-              关闭
+              {t("notifications.close")}
             </Button>
             <Button
               variant="contained"
               sx={{ bgcolor: '#feb47b' }}
               onClick={handleMarkAllAsRead}
             >
-              全部标记为已读
+              {t("notifications.markAllRead")}
             </Button>
           </DialogActions>
         </Dialog>
@@ -666,12 +667,12 @@ export default function DashboardLayout() {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>个人资料</DialogTitle>
+        <DialogTitle>{t("profile.title")}</DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
             <TextField
               fullWidth
-              label="用户名"
+              label={t("profile.username")}
               value={currentUserProfile.name}
               defaultValue={localStorage.getItem('userName') || '王様'}
               margin="normal"
@@ -689,7 +690,7 @@ export default function DashboardLayout() {
             />
             <TextField
               fullWidth
-              label="邮箱"
+              label={t("profile.email")}
               value={currentUserProfile.email}
               // defaultValue={localStorage.getItem('userEmail') || ''}
               margin="normal"
@@ -707,7 +708,7 @@ export default function DashboardLayout() {
             />
             <TextField
               fullWidth
-              label="角色"
+              label={t("profile.role")}
               value={currentUserProfile.role}
               // defaultValue="管理员"
               margin="normal"
@@ -728,7 +729,7 @@ export default function DashboardLayout() {
         <DialogActions>
           <Button onClick={() => setProfileDialogOpen(false)} sx={{ color: '#feb47b' }}>
             {/* 取消 */}
-            关闭
+            {t("profile.close")}
           </Button>
           {/* <Button sx={{ bgcolor: '#feb47b' }} variant="contained" onClick={() => setProfileDialogOpen(false)}>
             保存
@@ -743,12 +744,12 @@ export default function DashboardLayout() {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle>账户设置 - 修改密码</DialogTitle>
+        <DialogTitle>{t("account.title")}</DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
             <TextField
               fullWidth
-              label="当前密码"
+              label={t("account.currentPassword")}
               type="password"
               margin="normal"
               value={passwordData.currentPassword}
@@ -766,7 +767,7 @@ export default function DashboardLayout() {
             />
             <TextField
               fullWidth
-              label="新密码"
+              label={t("account.newPassword")}
               type="password"
               margin="normal"
               value={passwordData.newPassword}
@@ -784,7 +785,7 @@ export default function DashboardLayout() {
             />
             <TextField
               fullWidth
-              label="确认新密码"
+              label={t("account.confirmPassword")}
               type="password"
               margin="normal"
               value={passwordData.confirmPassword}
@@ -804,10 +805,10 @@ export default function DashboardLayout() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setAccountDialogOpen(false)} sx={{ color: '#feb47b' }}>
-            取消
+            {t("account.cancel")}
           </Button>
           <Button sx={{ bgcolor: '#feb47b' }} variant="contained" onClick={handleChangePassword}>
-            修改密码
+            {t("account.submit")}
           </Button>
         </DialogActions>
       </Dialog>

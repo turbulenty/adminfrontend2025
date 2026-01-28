@@ -1,7 +1,7 @@
 {
   "header": {
     "title": "Administrator Panel",
-    "language":"Language",
+    "language": "Language",
     "notifications": "Notifications",
     "notificationsDisabled": "Notifications Disabled",
     "account": "Account Settings"
@@ -37,5 +37,48 @@
     "confirmPassword": "Confirm New Password",
     "cancel": "Cancel",
     "submit": "Change Password"
+  },
+  "dashboard": {
+    "number":"number",
+    "userGrowthTrend": "User Growth Trend",
+    "userCount": "User Count",
+    "date": "Date",
+    "userTotal": "Total Users",
+    "userRoleDistribution": "User Role Distribution",
+    "systemOverview": "System Overview",
+    "totalUsers": "Total Users",
+    "activeUsers": "Active Users",
+    "todayNew": "New Today",
+    "inactiveUsers": "Inactive Users"
+  },
+  "userList": {
+    "addUser": "Add User",
+    "searchPlaceholder": "Search username or email...",
+    "table": {
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "pwdForm": {
+      "passwordLabel": "Password",
+      "newPasswordLabel": "New Password (leave blank to keep unchanged)",
+      "passwordHelper": "Initial password, at least 6 characters",
+      "newPasswordHelper": "At least 6 characters, leave blank to keep unchanged"
+    }
+  },
+  "settings": {
+    "basicSettings": "Basic Settings",
+    "systemName": "System Name",
+    "apiEndpoint": "API Endpoint",
+    "apiUrlDescription": "Base URL for the backend API",
+    "refreshInterval": "Refresh Interval (sec)",
+    "refreshDescription": "Time interval for automatic data refresh",
+    "featureSwitches": "Feature Toggles",
+    "enableNotifications": "Enable System Notifications",
+    "enableAutoRefresh": "Enable Auto Refresh",
+    "saveSettings": "Save Settings"
   }
 }

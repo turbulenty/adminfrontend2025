@@ -207,28 +207,28 @@ export default function DashboardHome() {
   // 定义统计卡片的配置数组
   const statCards = [
     {
-      title: '总用户数',
+      title: t("dashboard.totalUsers"),
       value: stats?.totalUsers || 0,  // 使用可选链和默认值防止 null 错误
       icon: <PeopleIcon sx={{ fontSize: 40 }} />,
       color: '#1976d2',    // 图标和数字颜色
       bgColor: '#e3f2fd',  // 卡片背景色
     },
     {
-      title: '活跃用户',
+      title: t("dashboard.activeUsers"),
       value: stats?.activeUsers || 0,
       icon: <CheckCircleIcon sx={{ fontSize: 40 }} />,
       color: '#2e7d32',
       bgColor: '#e8f5e9',
     },
     {
-      title: '今日新增',
+      title: t("dashboard.todayNew"),
       value: stats?.todayNewUsers || 0,
       icon: <PersonAddIcon sx={{ fontSize: 40 }} />,
       color: '#ed6c02',
       bgColor: '#fff3e0',
     },
     {
-      title: '非活跃用户',
+      title: t("dashboard.inactiveUsers"),
       value: stats?.inactiveUsers || 0,
       icon: <CancelIcon sx={{ fontSize: 40 }} />,
       color: '#d32f2f',
@@ -301,7 +301,7 @@ export default function DashboardHome() {
         {/* 用户增长趋势折线图 */}
         <Paper sx={{ p: 3 }}>
           <Typography variant="h6" fontWeight={600} mb={2}>
-            用户增长趋势
+            {t("dashboard.userGrowthTrend")}
           </Typography>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={userGrowth}>
@@ -312,12 +312,12 @@ export default function DashboardHome() {
               <XAxis
                 dataKey="day"
                 // label={{ value: '日期', position: 'insideBottom', offset: -5 }}
-                label={{ value: '日期', position: 'insideBottom', offset: -2}}
+                label={{ value: t("dashboard.date"), position: 'insideBottom', offset: -2}}
               />
 
               {/* Y轴：显示用户数 */}
               {/* <YAxis label={{ value: '用户数', angle: -90, position: 'insideLeft' }} /> */}
-              <YAxis label={{ value: '人数', angle: -90, position: 'insideLeft' }} />
+              <YAxis label={{ value: t("dashboard.number"), angle: -90, position: 'insideLeft' }} />
 
               {/* 鼠标悬停提示框 */}
               <Tooltip
@@ -335,7 +335,7 @@ export default function DashboardHome() {
                 // stroke="#1976d2"         // 线条颜色
                 stroke="#feb47b"         // 线条颜色
                 strokeWidth={2}          // 线条宽度
-                name="用户总数"          // 图例显示名称
+                name={t("dashboard.totalUsers")}       // 图例显示名称
                 // dot={{ fill: '#1976d2', r: 4 }}  // 数据点样式
                 // dot={{ fill: '#feb47b', r: 4 }}  // 数据点样式
                 // dot={<TriangleDot />}
@@ -348,7 +348,7 @@ export default function DashboardHome() {
         {/* 用户角色分布饼图 */}
         <Paper sx={{ p: 3 }}>
           <Typography variant="h6" fontWeight={600} mb={2}>
-            用户角色分布
+            {t("dashboard.userRoleDistribution")}
           </Typography>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -379,7 +379,7 @@ export default function DashboardHome() {
         <Box sx={{ gridColumn: { xs: '1', lg: '1 / -1' } }}>
           <Paper sx={{ p: 3 }}>
             <Typography variant="h6" fontWeight={600} mb={2}>
-              系统概览
+              {t("dashboard.systemOverview")}
             </Typography>
             {/* 四列统计数据网格 */}
             <Box
@@ -398,7 +398,7 @@ export default function DashboardHome() {
                 <Typography variant="h5" color="primary" fontWeight={600}>
                   {stats?.totalUsers || 0}
                 </Typography>
-                <Typography color="text.secondary">总用户数</Typography>
+                <Typography color="text.secondary">{t("dashboard.totalUsers")}</Typography>
               </Box>
 
               {/* 活跃用户 */}
@@ -406,7 +406,7 @@ export default function DashboardHome() {
                 <Typography variant="h5" color="success.main" fontWeight={600}>
                   {stats?.activeUsers || 0}
                 </Typography>
-                <Typography color="text.secondary">活跃用户</Typography>
+                <Typography color="text.secondary">{t("dashboard.activeUsers")}</Typography>
               </Box>
 
               {/* 今日新增 */}
@@ -414,7 +414,7 @@ export default function DashboardHome() {
                 <Typography variant="h5" color="warning.main" fontWeight={600}>
                   {stats?.todayNewUsers || 0}
                 </Typography>
-                <Typography color="text.secondary">今日新增</Typography>
+                <Typography color="text.secondary">{t("dashboard.todayNew")}</Typography>
               </Box>
 
               {/* 非活跃用户 */}
@@ -422,7 +422,7 @@ export default function DashboardHome() {
                 <Typography variant="h5" color="error.main" fontWeight={600}>
                   {stats?.inactiveUsers || 0}
                 </Typography>
-                <Typography color="text.secondary">非活跃用户</Typography>
+                <Typography color="text.secondary">{t("dashboard.inactiveUsers")}</Typography>
               </Box>
             </Box>
           </Paper>

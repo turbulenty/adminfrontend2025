@@ -200,7 +200,7 @@ export default function UsersPage() {
             },
           }}
         >
-          添加用户
+          {t("userList.addUser")}
         </Button>
       </Box>
 
@@ -208,7 +208,7 @@ export default function UsersPage() {
       <Box sx={{ mb: 2 }}>
         <TextField
           fullWidth
-          placeholder="搜索用户名或邮箱..."
+          placeholder={t("userList.searchPlaceholder")}
           value={searchQuery}
           onChange={(e) => handleSearch(e.target.value)}
           InputProps={{
@@ -235,7 +235,7 @@ export default function UsersPage() {
       </Box>
 
       {/* 用户表格 */}
-      <TableContainer component={Paper}
+      <TableContainer component={Paper} 
         sx={{
           boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
           maxHeight: 'calc(100vh - 320px)', // 视口高度 1.6 debug - (顶栏64px + 标题区域80px + 搜索框76px + 分页器100px)
@@ -244,12 +244,12 @@ export default function UsersPage() {
         <Table stickyHeader>  {/* 添加 stickyHeader 让表头固定 */}
           <TableHead>
             <TableRow>
-              <TableCell sx={{ bgcolor: '#feb47b' }}>ID</TableCell>
-              <TableCell sx={{ bgcolor: '#feb47b' }}>姓名</TableCell>
-              <TableCell sx={{ bgcolor: '#feb47b' }}>邮箱</TableCell>
-              <TableCell sx={{ bgcolor: '#feb47b' }}>角色</TableCell>
-              <TableCell sx={{ bgcolor: '#feb47b' }}>状态</TableCell>
-              <TableCell align="center" sx={{ bgcolor: '#feb47b' }}>操作</TableCell>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>{t("userList.table.id")}</TableCell>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>{t("userList.table.name")}</TableCell>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>{t("userList.table.email")}</TableCell>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>{t("userList.table.role")}</TableCell>
+              <TableCell sx={{ bgcolor: '#feb47b' }}>{t("userList.table.status")}</TableCell>
+              <TableCell align="center" sx={{ bgcolor: '#feb47b' }}>{t("userList.table.actions")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -329,12 +329,12 @@ export default function UsersPage() {
 
       {/* 添加/编辑用户对话框 */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>{editingUser ? '编辑用户' : '添加用户'}</DialogTitle>
+        <DialogTitle>{editingUser ? '编辑用户' : t("userList.addUser")}</DialogTitle>
         <DialogContent>
           <Box sx={{ pt: 2 }}>
             <TextField
               fullWidth
-              label="姓名"
+              label={t("userList.table.name")}
               value={currentUser.name}
               onChange={(e) => setCurrentUser({ ...currentUser, name: e.target.value })}
               margin="normal"
@@ -351,7 +351,7 @@ export default function UsersPage() {
             />
             <TextField
               fullWidth
-              label="邮箱"
+              label={t("userList.table.email")}
               value={currentUser.email}
               onChange={(e) => setCurrentUser({ ...currentUser, email: e.target.value })}
               margin="normal"
@@ -370,12 +370,12 @@ export default function UsersPage() {
 
             <TextField
               fullWidth
-              label={editingUser ? '新密码（留空则不修改）' : '密码'}
+              label={editingUser ? t("userList.pwdForm.newPasswordLabel") : t("userList.pwdForm.passwordLabel")}
               type="password"
               value={currentUser.password}
               onChange={(e) => setCurrentUser({ ...currentUser, password: e.target.value })}
               margin="normal"
-              helperText={editingUser ? '至少6位，留空则不修改' : '初始密码，至少6位'}
+              helperText={editingUser ? t("userList.pwdForm.newPasswordHelper") : t("userList.pwdForm.passwordHelper")}
               sx={{
                 '& .MuiOutlinedInput-root': {
                   '&.Mui-focused fieldset': {
@@ -391,7 +391,7 @@ export default function UsersPage() {
             <TextField
               fullWidth
               select
-              label="角色"
+              label={t("userList.table.role")}
               value={currentUser.role}
               onChange={(e) => setCurrentUser({ ...currentUser, role: e.target.value })}
               margin="normal"
@@ -414,7 +414,7 @@ export default function UsersPage() {
             <TextField
               fullWidth
               select
-              label="状态"
+              label={t("userList.table.status")}
               value={currentUser.status}
               onChange={(e) => setCurrentUser({ ...currentUser, status: e.target.value })}
               margin="normal"
@@ -436,10 +436,10 @@ export default function UsersPage() {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} sx={{ color: '#feb47b' }}>
-            取消
+            {t("account.cancel")}
           </Button>
           <Button variant="contained" onClick={handleSaveUser} sx={{ bgcolor: '#feb47b' }}>
-            保存
+            {t("settings.saveSettings")}
           </Button>
         </DialogActions>
       </Dialog>

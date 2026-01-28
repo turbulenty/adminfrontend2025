@@ -123,12 +123,12 @@ export default function SettingsPage() {
       {/* 基本设置 */}
       <Paper sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" sx={{ mb: 3 }}>
-          基本设置
+          {t("settings.basicSettings")}
         </Typography>
 
         <TextField
           fullWidth
-          label="系统名称"
+          label={t("settings.systemName")}
           value={settings.systemName}
           onChange={handleChange('systemName')}
           sx={{ 
@@ -146,10 +146,10 @@ export default function SettingsPage() {
 
         <TextField
           fullWidth
-          label="API端点"
+          label={t("settings.apiEndpoint")}
           value={settings.apiEndpoint}
           onChange={handleChange('apiEndpoint')}
-          helperText="后端API的基础URL"
+          helperText={t("settings.apiUrlDescription")}
           sx={{ 
             mb: 3,
             '& .MuiOutlinedInput-root': {
@@ -165,11 +165,11 @@ export default function SettingsPage() {
 
         <TextField
           fullWidth
-          label="刷新间隔（秒）"
+          label={t("settings.refreshInterval")}
           type="number"
           value={settings.refreshInterval}
           onChange={handleChange('refreshInterval')}
-          helperText="数据自动刷新的时间间隔"
+          helperText={t("settings.refreshDescription")}
           sx={{
             '& .MuiOutlinedInput-root': {
               '&.Mui-focused fieldset': {
@@ -186,7 +186,7 @@ export default function SettingsPage() {
       {/* 功能开关 */}
       <Paper sx={{ p: 3, mb: 3 }}>
         <Typography variant="h6" sx={{ mb: 3 }}>
-          功能开关
+          {t("settings.featureSwitches")}
         </Typography>
 
         <FormControlLabel
@@ -204,10 +204,10 @@ export default function SettingsPage() {
               }}
             />
           }
-          label="启用系统通知"
+          label={t("settings.enableNotifications")}
           sx={{ display: 'block', mb: 2 }}
         />
-
+ 
         <FormControlLabel
           control={
             <Switch
@@ -223,7 +223,7 @@ export default function SettingsPage() {
               }}
             />
           }
-          label="启用自动刷新"
+          label={t("settings.enableAutoRefresh")}
           sx={{ display: 'block' }}
         />
       </Paper>
@@ -237,7 +237,7 @@ export default function SettingsPage() {
           onClick={handleSave}
           sx={{ bgcolor: '#feb47b', px: 4 }}
         >
-          保存设置
+          {t("settings.saveSettings")}
         </Button>
       </Box>
     </Box>
